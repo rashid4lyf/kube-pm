@@ -26,6 +26,21 @@ class KubernetesService {
         return response.data
 
     }
+
+    static getPodsForNamespace = async (namespace) => {
+        let response = await axios.get("/api/kubernetes/".concat(namespace).concat("/pods"))
+        return response.data
+    }
+
+    static getPodsRunningForNamespace = async (namespace) => {
+        let response = await axios.get("/api/kubernetes/".concat(namespace).concat("/pods/running"))
+        return response.data
+    }
+
+    static getPodsNotRunningForNamespace = async (namespace) => {
+        let response = await axios.get("/api/kubernetes/".concat(namespace).concat("/pods/nonrunning"))
+        return response.data
+    }
 }
 
 export default KubernetesService;

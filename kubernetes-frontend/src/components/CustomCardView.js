@@ -1,10 +1,21 @@
 import React from 'react';
-import {Avatar, Box, Card, CardContent, CardHeader, CircularProgress, Typography} from "@mui/material";
+import {
+    Avatar,
+    Box,
+    Button,
+    Card,
+    CardActions,
+    CardContent,
+    CardHeader,
+    CircularProgress, IconButton,
+    Typography
+} from "@mui/material";
 import {red, teal} from "@mui/material/colors";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 function CustomCardView(props) {
     return (
-        <Card sx={{ minHeight: 250}}>
+        <Card sx={{ minHeight: 250, textAlign: 'left'}}>
             <CardHeader
                 avatar={
                     <Avatar sx={{bgcolor: teal[500]}} aria-label="deployments">
@@ -15,14 +26,19 @@ function CustomCardView(props) {
                 subheader={props.description}
             />
 
-            <CardContent>
-                { props.total === "" &&
-                    <Box sx={{ display: 'flex' }}>
+            <CardContent sx={{textAlign: 'center'}}>
+                { props.loading &&
+                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                         <CircularProgress />
                     </Box>
                 }
-                <Typography variant={"h2"}>{props.total}</Typography>
+                {!props.loading &&
+                    <Typography variant={"h2"}>{props.total}</Typography>
+                }
             </CardContent>
+            <CardActions sx={{justifyContent: 'end'}}>
+                <Button color={"secondary"} size="small">View details</Button>
+            </CardActions>
         </Card>
     );
 }

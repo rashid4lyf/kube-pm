@@ -33,4 +33,22 @@ public class KubernetesController {
         Integer total = kubernetesService.getTotalDeploymentsForNamespace(namespace).getItems().size();
         return Mono.just(total);
     }
+
+    @GetMapping(value = "/{namespace}/pods")
+    public Mono<Integer> getTotalPodsForNamespace(@PathVariable(name = "namespace") String namespace) {
+        Integer total = kubernetesService.getTotalPodsForNamespace(namespace).getItems().size();
+        return Mono.just(total);
+    }
+
+    @GetMapping(value = "/{namespace}/pods/running")
+    public Mono<Integer> getTotalPodsRunningForNamespace(@PathVariable(name = "namespace") String namespace) {
+        Integer total = kubernetesService.getTotalPodsRunningForNamespace(namespace);
+        return Mono.just(total);
+    }
+
+    @GetMapping(value = "/{namespace}/pods/nonrunning")
+    public Mono<Integer> getTotalPodsNotRunningForNamespace(@PathVariable(name = "namespace") String namespace) {
+        Integer total = kubernetesService.getTotalPodsNotRunningForNamespace(namespace);
+        return Mono.just(total);
+    }
 }

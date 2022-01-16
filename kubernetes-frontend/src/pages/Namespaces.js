@@ -15,12 +15,19 @@ function Namespaces() {
 
     //variables from store
     const namespaces = useStore((state) => state.namespaces)
+    const loading = useStore((state) => state.loadingNamespaceDetails)
     const selectedNamespace = useStore((state) => state.selectedNamespaceDetail)
     const totalDeploymentsForNs = useStore((state) => state.selectedNamespaceTotalDeployments)
+    const totalPodsForNs = useStore((state) => state.selectedNamespaceTotalPods)
+    const totalPodsRunningForNs = useStore((state) => state.selectedNamespaceTotalRunningPods)
+    const totalPodsNotRunningForNs = useStore((state) => state.selectedNamespaceTotalUnavailablePods)
 
     //getters from store
     const getNamespaces = useStore((state) => state.getNamespaces)
     const getTotalDeployments = useStore((state) => state.getDeploymentsForNamespaces)
+    const getTotalPods = useStore((state) => state.getPodsForNamespaces)
+    const getTotalPodsRunning = useStore((state) => state.getPodsRunningForNamespaces)
+    const getTotalPodsNotRunning = useStore((state) => state.getPodsNotRunningForNamespaces)
 
     const descriptionSnippets = [
         "Total number of deployments",
@@ -36,7 +43,10 @@ function Namespaces() {
 
     useEffect(() => {
         if (selectedNamespace !== "") {
-            getTotalDeployments(selectedNamespace);
+            getTotalDeployments(selectedNamespace)
+            getTotalPods(selectedNamespace)
+            getTotalPodsRunning(selectedNamespace)
+            getTotalPodsNotRunning(selectedNamespace)
         }
     }, [selectedNamespace])
 
@@ -50,16 +60,16 @@ function Namespaces() {
                 {selectedNamespace !== "" &&
                     <Grid container spacing={2}>
                         <Grid item xs={3}>
-                            <CustomCardView overview={"Deployments"} description={descriptionSnippets[0]} total={totalDeploymentsForNs}></CustomCardView>
+                            <CustomCardView overview={"Deployments"} description={descriptionSnippets[0]} total={totalDeploymentsForNs} loading={loading}/>
                         </Grid>
                         <Grid item xs={3}>
-                            <CustomCardView overview={"Pods"} description={descriptionSnippets[1]}></CustomCardView>
+                            <CustomCardView overview={"Pods"} description={descriptionSnippets[1]} total={totalPodsForNs} loading={loading}/>
                         </Grid>
                         <Grid item xs={3}>
-                            <CustomCardView overview={"Running Pods"} description={descriptionSnippets[2]}></CustomCardView>
+                            <CustomCardView overview={"Running Pods"} description={descriptionSnippets[2]} total={totalPodsRunningForNs} loading={loading}/>
                         </Grid>
                         <Grid item xs={3}>
-                            <CustomCardView overview={"Unavailable Pods"} description={descriptionSnippets[3]}></CustomCardView>
+                            <CustomCardView overview={"Unavailable Pods"} description={descriptionSnippets[3]} total={totalPodsNotRunningForNs} loading={loading}></CustomCardView>
                         </Grid>
                     </Grid>
 

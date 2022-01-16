@@ -6,6 +6,7 @@ import KubernetesService from "../services/KubernetesService";
 
 let useStore = (set) => ({
     namespaces: [],
+    loadingNamespaceDetails: false,
     selectedNamespaceDetail: "",
     selectedNamespaceTotalDeployments: "",
     selectedNamespaceTotalPods: "",
@@ -19,8 +20,25 @@ let useStore = (set) => ({
         set({namespaces: list})
     },
     getDeploymentsForNamespaces: async (namespace) => {
+        set({loadingNamespaceDetails: true})
         let total = await KubernetesService.getDeploymentsForNamespace(namespace)
-        set({selectedNamespaceTotalDeployments: total})
+        set({selectedNamespaceTotalDeployments: total, loadingNamespaceDetails: false})
+
+    },
+    getPodsForNamespaces: async (namespace) => {
+        set({loadingNamespaceDetails: true})
+        let total = await KubernetesService.getPodsForNamespace(namespace)
+        set({selectedNamespaceTotalPods: total, loadingNamespaceDetails: false})
+    },
+    getPodsRunningForNamespaces: async (namespace) => {
+        set({loadingNamespaceDetails: true})
+        let total = await KubernetesService.getPodsRunningForNamespace(namespace)
+        set({selectedNamespaceTotalRunningPods: total, loadingNamespaceDetails: false})
+    },
+    getPodsNotRunningForNamespaces: async (namespace) => {
+        set({loadingNamespaceDetails: true})
+        let total = await KubernetesService.getPodsNotRunningForNamespace(namespace)
+        set({selectedNamespaceTotalUnavailablePods: total, loadingNamespaceDetails: false})
     }
 })
 
