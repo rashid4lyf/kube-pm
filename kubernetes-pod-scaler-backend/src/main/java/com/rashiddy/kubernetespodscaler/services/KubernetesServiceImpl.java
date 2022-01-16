@@ -2,6 +2,7 @@ package com.rashiddy.kubernetespodscaler.services;
 
 
 import io.fabric8.kubernetes.api.model.NamespaceList;
+import io.fabric8.kubernetes.api.model.apps.DeploymentList;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import org.springframework.stereotype.Service;
 
@@ -17,5 +18,9 @@ public class KubernetesServiceImpl implements KubernetesService {
     public NamespaceList getAllNamepsaces() {
         NamespaceList namespaceList = kubernetesClient.namespaces().list();
         return namespaceList;
+    }
+
+    public DeploymentList getTotalDeploymentsForNamespace(String namespace) {
+        return kubernetesClient.apps().deployments().inNamespace(namespace).list();
     }
 }

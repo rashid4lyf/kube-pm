@@ -1,29 +1,26 @@
 import create from 'zustand';
-import {devtools, persist} from "zustand/middleware";
+import {devtools} from "zustand/middleware";
 import axios from "axios";
-import namespaces from "../pages/Namespaces";
-
+import KubernetesService from "../services/KubernetesService";
 
 
 let useStore = (set) => ({
     namespaces: [],
+    selectedNamespaceDetail: "",
+    selectedNamespaceTotalDeployments: "",
+    selectedNamespaceTotalPods: "",
+    selectedNamespaceTotalRunningPods: "",
+    selectedNamespaceTotalUnavailablePods: "",
+    setSelectedNamespaceDetail: (namespace) => {
+        set({selectedNamespaceDetail: namespace})
+    },
     getNamespaces: async () => {
-        let list = []
-        let count = 1;
-        const response = await axios.get("/api/kubernetes/namespaces")
-        response.data.items.forEach(item => {
-            console.log(item)
-            list.push({
-            id: count,
-                creationTime: item.metadata.creationTimestamp,
-                apiVersion: item.apiVersion,
-                name: item.metadata.name
-            })
-            count++
-        })
+        let list = await KubernetesService.getAllNamespaces()
         set({namespaces: list})
-
-
+    },
+    getDeploymentsForNamespaces: async (namespace) => {
+        let total = await KubernetesService.getDeploymentsForNamespace(namespace)
+        set({selectedNamespaceTotalDeployments: total})
     }
 })
 
