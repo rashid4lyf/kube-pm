@@ -12,8 +12,19 @@ import {
 } from "@mui/material";
 import {red, teal} from "@mui/material/colors";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import {useNavigate} from 'react-router-dom';
 
 function CustomCardView(props) {
+
+    const navigate = useNavigate()
+
+    const onViewMoreClick = () => {
+
+        if (props.overview.toLowerCase() === "deployments") {
+            navigate("/deployments/".concat(props.namespace))
+        }
+    }
+
     return (
         <Card sx={{ minHeight: 250, textAlign: 'left'}}>
             <CardHeader
@@ -37,7 +48,7 @@ function CustomCardView(props) {
                 }
             </CardContent>
             <CardActions sx={{justifyContent: 'end'}}>
-                <Button color={"secondary"} size="small">View details</Button>
+                <Button color={"secondary"} size="small" onClick={onViewMoreClick}>View details</Button>
             </CardActions>
         </Card>
     );

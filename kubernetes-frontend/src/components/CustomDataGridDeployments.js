@@ -3,9 +3,9 @@ import {Box, Typography} from "@mui/material";
 import {DataGrid, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarFilterButton} from "@mui/x-data-grid";
 import useStore from "../state/Store";
 
-function CustomDataGrid(props) {
+function CustomDataGridNamespace(props) {
 
-    const setSelectedNamespaceDetail = useStore((state) => state.setSelectedNamespaceDetail)
+    const setSelectedDeploymentDetail = useStore((state) => state.setSelectedDeploymentDetail)
 
     function CustomToolbar() {
         return (
@@ -16,29 +16,29 @@ function CustomDataGrid(props) {
         );
     }
 
-    function setSelectedNamespace(item) {
-        let name = props.namespaces.find(element => element.id === item[0]).name
-        setSelectedNamespaceDetail(name)
+    function setSelectedDeployment(item) {
+        let name = props.deployments.find(element => element.id === item[0]).name
+        console.log(name)
+        setSelectedDeploymentDetail(name)
     }
 
     return (
-        <div style={{padding: 20}}>
-            <Typography align={'left'} variant={"h6"}>Namespaces</Typography>
+        <div>
             <Box sx={{m: 2}}/>
             <div style={{height: 400, width: "100%"}}>
                 <DataGrid
                     components={{
                         Toolbar: CustomToolbar,
                     }}
-                    rows={props.namespaces}
+                    rows={props.deployments}
                     columns={props.columns}
                     pageSize={5}
                     rowsPerPageOptions={[5]}
-                    onSelectionModelChange={item => setSelectedNamespace(item)}
+                    onSelectionModelChange={item => setSelectedDeployment(item)}
                 />
             </div>
         </div>
     );
 }
 
-export default CustomDataGrid;
+export default CustomDataGridNamespace;

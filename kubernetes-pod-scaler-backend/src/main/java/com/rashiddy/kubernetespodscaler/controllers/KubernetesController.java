@@ -1,10 +1,12 @@
 package com.rashiddy.kubernetespodscaler.controllers;
 
 
+import com.rashiddy.kubernetespodscaler.data.DeploymentInfo;
 import com.rashiddy.kubernetespodscaler.services.KubernetesService;
 import com.rashiddy.kubernetespodscaler.services.KubernetesServiceImpl;
 import io.fabric8.kubernetes.api.model.NamespaceList;
 import io.fabric8.kubernetes.api.model.apps.Deployment;
+import io.fabric8.kubernetes.api.model.apps.DeploymentList;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
@@ -21,17 +23,26 @@ public class KubernetesController {
 
     }
 
-
     @GetMapping("/namespaces")
     public Mono<NamespaceList> getNamespaces() {
         NamespaceList namespaceList = kubernetesService.getAllNamepsaces();
         return Mono.just(namespaceList);
     }
 
-    @GetMapping(value = "/{namespace}/deployments")
+    @GetMapping(value = "/{namespace}/deployments/total")
     public Mono<Integer> getTotalDeploymentsForNamespace(@PathVariable(name = "namespace") String namespace) {
         Integer total = kubernetesService.getTotalDeploymentsForNamespace(namespace).getItems().size();
         return Mono.just(total);
+    }
+
+    @GetMapping (value = "/{namespace}/deployments")
+    public Mono<List<DeploymentInfo>> getAllDeploymentsForNamespace(@PathVariable(name = "namespace") String namespace) {
+        return Mono.just(kubernetesService.getAllDeploymentsForNamespace(namespace));
+    }
+
+    @GetMapping(value = "/{namespace}/deployment/{deploymentName}")
+    public Mono<Deployment> getDeploymentInformation(@PathVariable(name = "namespace") String namespace, @PathVariable(name = "deploymentName") String deploymentName) {
+        return Mono.just(kubernetesService.getDeploymentInfo(namespace, deploymentName));
     }
 
     @GetMapping(value = "/{namespace}/pods")

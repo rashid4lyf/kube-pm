@@ -14,7 +14,9 @@ ReactDOM.render(
         <Routes>
             <Route path="/" element={<App/>}>
                 <Route path="/home" element={<Home/>}/>
-                <Route path="/deployments" element={<Deployment/>}/>
+                <Route path="/deployments" element={<Deployment/>}>
+                    <Route path=":namespace" element={<Deployment/>}/>
+                </Route>
                 <Route path="/namespaces" element={<Namespaces/>}/>
             </Route>
         </Routes>

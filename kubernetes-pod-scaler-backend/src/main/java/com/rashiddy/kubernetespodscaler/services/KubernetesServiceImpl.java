@@ -1,13 +1,19 @@
 package com.rashiddy.kubernetespodscaler.services;
 
 
+import com.rashiddy.kubernetespodscaler.data.DeploymentInfo;
+import com.rashiddy.kubernetespodscaler.data.Label;
 import io.fabric8.kubernetes.api.model.NamespaceList;
 import io.fabric8.kubernetes.api.model.PodList;
+import io.fabric8.kubernetes.api.model.apps.Deployment;
 import io.fabric8.kubernetes.api.model.apps.DeploymentList;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class KubernetesServiceImpl implements KubernetesService {
@@ -42,6 +48,24 @@ public class KubernetesServiceImpl implements KubernetesService {
     public Integer getTotalPodsNotRunningForNamespace(String namespace) {
         AtomicInteger count = getCountPodStatus(namespace, false);
         return count.get();
+    }
+
+    @Override
+    public List<DeploymentInfo> getAllDeploymentsForNamespace(String namespace) {
+        DeploymentList deploymentList = kubernetesClient.apps().deployments().inNamespace(namespace).list();
+        List<DeploymentInfo> deploymentInfoList = new ArrayList<>();
+        AtomicReference<Integer> id = new AtomicReference<>(0);
+        deploymentList.getItems().forEach(deployment -> {
+            id.getAndSet(id.get() + 1);
+            deploymentInfoList.add(new DeploymentInfo(id.get().longValue(), deployment.getMetadata().getName(), deployment.getSpec().getReplicas().toString(), deployment.getMetadata().getLabels()));
+        });
+        return deploymentInfoList;
+    }
+
+    public Deployment getDeploymentInfo(String namespace, String deploymentName) {
+        List<Deployment> deploymentList =  kubernetesClient.apps().deployments().inNamespace(namespace).list().getItems();
+        deploymentList = deploymentList.stream().filter(deployment -> deployment.getMetadata().getName().equals(deploymentName)).toList();
+        return deploymentList.get(0);
     }
 
     private AtomicInteger getCountPodStatus(String namespace, Boolean running) {

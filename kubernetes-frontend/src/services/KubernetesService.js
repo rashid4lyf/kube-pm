@@ -23,8 +23,13 @@ class KubernetesService {
 
     static getDeploymentsForNamespace = async (namespace) => {
         let response = await axios.get("/api/kubernetes/".concat(namespace).concat("/deployments"))
+        console.log(response.data)
         return response.data
+    }
 
+    static getDeploymentsTotalForNamespace = async (namespace) => {
+        let response = await axios.get("/api/kubernetes/".concat(namespace).concat("/deployments/total"))
+        return response.data
     }
 
     static getPodsForNamespace = async (namespace) => {

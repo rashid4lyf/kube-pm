@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import useStore from "../state/Store"
 import {Box, Grid, Typography} from "@mui/material";
-import CustomDataGrid from "../components/CustomDataGrid";
+import CustomDataGridNamespace from "../components/CustomDataGridNamespace";
 import CustomCardView from "../components/CustomCardView";
 
 function Namespaces() {
@@ -24,7 +24,7 @@ function Namespaces() {
 
     //getters from store
     const getNamespaces = useStore((state) => state.getNamespaces)
-    const getTotalDeployments = useStore((state) => state.getDeploymentsForNamespaces)
+    const getTotalDeployments = useStore((state) => state.getDeploymentsTotalForNamespaces)
     const getTotalPods = useStore((state) => state.getPodsForNamespaces)
     const getTotalPodsRunning = useStore((state) => state.getPodsRunningForNamespaces)
     const getTotalPodsNotRunning = useStore((state) => state.getPodsNotRunningForNamespaces)
@@ -53,23 +53,23 @@ function Namespaces() {
 
     return (
         <div>
-            <CustomDataGrid namespaces={namespaces} columns={columns}/>
+            <CustomDataGridNamespace namespaces={namespaces} columns={columns}/>
             <div style={{padding: 20}}>
                 <Typography align={"left"} variant={"h6"}>Namespace Details</Typography>
                 <Box sx={{m: 2}}/>
                 {selectedNamespace !== "" &&
                     <Grid container spacing={2}>
                         <Grid item xs={3}>
-                            <CustomCardView overview={"Deployments"} description={descriptionSnippets[0]} total={totalDeploymentsForNs} loading={loading}/>
+                            <CustomCardView overview={"Deployments"} description={descriptionSnippets[0]} total={totalDeploymentsForNs} loading={loading} namespace={selectedNamespace}/>
                         </Grid>
                         <Grid item xs={3}>
-                            <CustomCardView overview={"Pods"} description={descriptionSnippets[1]} total={totalPodsForNs} loading={loading}/>
+                            <CustomCardView overview={"Pods"} description={descriptionSnippets[1]} total={totalPodsForNs} loading={loading} namespace={selectedNamespace}/>
                         </Grid>
                         <Grid item xs={3}>
-                            <CustomCardView overview={"Running Pods"} description={descriptionSnippets[2]} total={totalPodsRunningForNs} loading={loading}/>
+                            <CustomCardView overview={"Running Pods"} description={descriptionSnippets[2]} total={totalPodsRunningForNs} loading={loading} namespace={selectedNamespace}/>
                         </Grid>
                         <Grid item xs={3}>
-                            <CustomCardView overview={"Unavailable Pods"} description={descriptionSnippets[3]} total={totalPodsNotRunningForNs} loading={loading}></CustomCardView>
+                            <CustomCardView overview={"Unavailable Pods"} description={descriptionSnippets[3]} total={totalPodsNotRunningForNs} loading={loading} namespace={selectedNamespace}></CustomCardView>
                         </Grid>
                     </Grid>
 
