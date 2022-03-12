@@ -7,9 +7,12 @@ import io.fabric8.kubernetes.api.model.NamespaceList;
 import io.fabric8.kubernetes.api.model.PodList;
 import io.fabric8.kubernetes.api.model.apps.Deployment;
 import io.fabric8.kubernetes.api.model.apps.DeploymentList;
+
 import io.fabric8.kubernetes.client.KubernetesClient;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -52,14 +55,37 @@ public class KubernetesServiceImpl implements KubernetesService {
 
     @Override
     public List<DeploymentInfo> getAllDeploymentsForNamespace(String namespace) {
+        Instant instantNow = Instant.now();
         DeploymentList deploymentList = kubernetesClient.apps().deployments().inNamespace(namespace).list();
         List<DeploymentInfo> deploymentInfoList = new ArrayList<>();
         AtomicReference<Integer> id = new AtomicReference<>(0);
         deploymentList.getItems().forEach(deployment -> {
             id.getAndSet(id.get() + 1);
-            deploymentInfoList.add(new DeploymentInfo(id.get().longValue(), deployment.getMetadata().getName(), deployment.getSpec().getReplicas().toString(), deployment.getMetadata().getLabels()));
+            String status = String.format("%s/%s", deployment.getStatus().getReadyReplicas(), deployment.getStatus().getReplicas());
+            Instant instantCreation = Instant.parse(deployment.getMetadata().getCreationTimestamp());
+            deploymentInfoList.add(new DeploymentInfo(id.get().longValue(),
+                    deployment.getMetadata().getName(),
+                    status,
+                    getBetween(instantNow, instantCreation),
+                    deployment.getMetadata().getLabels()));
         });
         return deploymentInfoList;
+    }
+
+    @Override
+    public String restartDeployment(String namespace, String deploymentName) {
+        kubernetesClient.apps().deployments().inNamespace(namespace).withName(deploymentName).rolling().restart();
+        return "success";
+    }
+
+    private String getBetween(Instant instantNow, Instant instantCreation) {
+        long days =  ChronoUnit.DAYS.between(instantCreation, instantNow);
+        if (days > 0l) {
+            return String.format("%s days", days);
+        } else {
+            long minutes = ChronoUnit.MINUTES.between(instantCreation, instantNow);
+            return String.format("%s minutes", minutes);
+        }
     }
 
     public Deployment getDeploymentInfo(String namespace, String deploymentName) {

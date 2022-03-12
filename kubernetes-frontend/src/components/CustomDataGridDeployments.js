@@ -1,9 +1,9 @@
 import React from 'react';
-import {Box, Typography} from "@mui/material";
+import {Box} from "@mui/material";
 import {DataGrid, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarFilterButton} from "@mui/x-data-grid";
 import useStore from "../state/Store";
 
-function CustomDataGridNamespace(props) {
+function CustomDataGridDeployment(props) {
 
     const setSelectedDeploymentDetail = useStore((state) => state.setSelectedDeploymentDetail)
 
@@ -41,4 +41,4 @@ function CustomDataGridNamespace(props) {
     );
 }
 
-export default CustomDataGridNamespace;
+export default CustomDataGridDeployment;

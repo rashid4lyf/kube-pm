@@ -1,13 +1,19 @@
 import './App.css';
 import Header from "./components/Header";
 import {Outlet} from "react-router-dom";
+import {Box, CssBaseline, Toolbar} from "@mui/material";
+import React from "react";
 
 function App() {
     return (
-        <div className="App">
+        <Box sx={{ display: 'flex' }}>
+            <CssBaseline />
             <Header/>
-            <Outlet/>
-        </div>
+            <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+                <Toolbar />
+                <Outlet/>
+            </Box>
+        </Box>
     );
 }
 

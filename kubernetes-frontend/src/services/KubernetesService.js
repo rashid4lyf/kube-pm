@@ -46,6 +46,11 @@ class KubernetesService {
         let response = await axios.get("/api/kubernetes/".concat(namespace).concat("/pods/nonrunning"))
         return response.data
     }
+
+    static restartDeployment = async (namespace, deploymentName) => {
+        let response = await axios.get("/api/kubernetes/".concat(namespace).concat("/deployment/").concat(deploymentName).concat("/restart"))
+        return response.data
+    }
 }
 
 export default KubernetesService;

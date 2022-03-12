@@ -14,6 +14,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Menu from '@mui/material/Menu';
 import {teal} from "@mui/material/colors";
 import {useNavigate} from 'react-router-dom';
+import PermanentDrawerLeft from "./PermanentDrawerLeft";
 
 function Header() {
 
@@ -28,7 +29,7 @@ function Header() {
         },
     });
 
-    const pages = ['Namespaces', 'Deployments', 'Pods'];
+    const pages = ['About', 'Version 0.0.1-Alpha'];
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -61,9 +62,9 @@ function Header() {
 
 
     return (
-        <Box sx={{flexGrow: 1}}>
+
             <ThemeProvider theme={theme}>
-                <AppBar position="static">
+                <AppBar position="fixed" sx={{zIndex: (theme) => theme.zIndex.drawer + 1}}>
                     <Toolbar>
                         <Typography variant="h6" component="div" sx={{mr: 2, display: {xs: 'none', md: 'flex'}}}>
                             Kubernetes Pod Manager
@@ -118,8 +119,9 @@ function Header() {
                         </Box>
                     </Toolbar>
                 </AppBar>
+                <PermanentDrawerLeft/>
             </ThemeProvider>
-        </Box>
+
 
     );
 }

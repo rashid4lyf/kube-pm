@@ -45,6 +45,11 @@ public class KubernetesController {
         return Mono.just(kubernetesService.getDeploymentInfo(namespace, deploymentName));
     }
 
+    @GetMapping(value = "/{namespace}/deployment/{deploymentName}/restart")
+    public Mono<String> restartDeployment(@PathVariable(name = "namespace") String namespace, @PathVariable(name = "deploymentName") String deploymentName) {
+        return Mono.just(kubernetesService.restartDeployment(namespace, deploymentName));
+    }
+
     @GetMapping(value = "/{namespace}/pods")
     public Mono<Integer> getTotalPodsForNamespace(@PathVariable(name = "namespace") String namespace) {
         Integer total = kubernetesService.getTotalPodsForNamespace(namespace).getItems().size();

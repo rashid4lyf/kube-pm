@@ -24,4 +24,6 @@ public interface KubernetesService {
     Deployment getDeploymentInfo(String namespace, String deploymentName);
 
     List<DeploymentInfo> getAllDeploymentsForNamespace(String namespace);
+
+    String restartDeployment(String namespace, String deploymentName);
 }
