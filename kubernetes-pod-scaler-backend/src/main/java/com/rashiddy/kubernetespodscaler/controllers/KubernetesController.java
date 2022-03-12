@@ -67,4 +67,10 @@ public class KubernetesController {
         Integer total = kubernetesService.getTotalPodsNotRunningForNamespace(namespace);
         return Mono.just(total);
     }
+
+    @GetMapping(value = "/watch/events")
+    public Mono<String> watchEvents() {
+        kubernetesService.watchEvents();
+        return Mono.just("success");
+    }
 }
