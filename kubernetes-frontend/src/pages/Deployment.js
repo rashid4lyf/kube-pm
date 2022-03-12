@@ -31,20 +31,29 @@ function Deployment(props) {
     const namespaces = useStore((state) => state.namespaces)
     const getNamespaces = useStore((state) => state.getNamespaces)
 
+    const [selectedNamespace, setSelectedNamespace] = useState('')
+
     const deployments = useStore((state) => state.deployments)
     const getDeployments = useStore((state) => state.getDeploymentsForNamespace)
 
-    const [openAuto, setOpenAuto] = React.useState(false);
     const [options, setOptions] = React.useState([]);
     const loading = open && options.length === 0;
+
+
 
 
     useEffect(() => {
         getNamespaces()
         if (namespace !== undefined) {
-            getDeployments(namespace)
+            if (namespace === selectedNamespace.name || selectedNamespace === '') {
+                getDeployments(namespace)
+            } else {
+                getDeployments(selectedNamespace.name)
+            }
+        } else if (selectedNamespace !== '') {
+            getDeployments(selectedNamespace.name)
         }
-    }, [query]);
+    }, [query, selectedNamespace]);
 
     useEffect(() => {
         let active = true;
@@ -141,9 +150,10 @@ function Deployment(props) {
         <div style={{padding: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={8}>
-                    <Typography align={'left'} variant={"h6"}>{namespace} deployments</Typography>
+                    <Typography align={'left'} variant={"h6"}>{namespace} Deployments</Typography>
                 </Grid>
                 <Grid item xs={4}>
+                    <Box display="flex" justifyContent="flex-end">
                     <Autocomplete
                         disablePortal
                         open={open}
@@ -153,16 +163,24 @@ function Deployment(props) {
                         onClose={() => {
                             setOpen(false);
                         }}
+                        onChange={(event, newValue) => {
+                            console.log(newValue)
+                            if (newValue === null) {
+                                setSelectedNamespace('')
+                            } else {
+                                setSelectedNamespace(newValue)
+                            }
+                        }}
                         isOptionEqualToValue={(option, value) => option.name === value.name}
                         getOptionLabel={(option) => option.name}
                         id="combo-box-demo"
                         options={options}
                         loading={loading}
-                        sx={{ width: 300 }}
+                        sx={{ width: '75%' }}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
-                                label="Asynchronous"
+                                label={namespace === undefined ? "Select Namespace" : namespace}
                                 InputProps={{
                                     ...params.InputProps,
                                     endAdornment: (
@@ -175,6 +193,7 @@ function Deployment(props) {
                             />
                         )}
                     />
+                    </Box>
                 </Grid>
             </Grid>
 
