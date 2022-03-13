@@ -28,8 +28,8 @@ let useStore = (set) => ({
         set({namespaces: list})
     },
     getDeploymentsForNamespace: async (namespace) => {
-      let deployments = await kubernetesService.getDeploymentsForNamespace(namespace)
-      set({deployments: deployments})
+        let deployments = await kubernetesService.getDeploymentsForNamespace(namespace)
+        set({deployments: deployments})
     },
     getDeploymentsTotalForNamespaces: async (namespace) => {
         set({loadingNamespaceDetails: true})

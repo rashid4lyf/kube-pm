@@ -63,64 +63,64 @@ function Header() {
 
     return (
 
-            <ThemeProvider theme={theme}>
-                <AppBar position="fixed" sx={{zIndex: (theme) => theme.zIndex.drawer + 1}}>
-                    <Toolbar>
-                        <Typography variant="h6" component="div" sx={{mr: 2, display: {xs: 'none', md: 'flex'}}}>
-                            Kubernetes Pod Manager
-                        </Typography>
-                        <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
-                            <IconButton
-                                size="large"
-                                edge="start"
-                                color="inherit"
-                                aria-label="menu"
-                                onClick={handleOpenNavMenu}
-                                sx={{mr: 2}}
-                            >
-                                <MenuIcon/>
-                            </IconButton>
-                            <Menu
-                                id="menu-appbar"
-                                anchorEl={anchorElNav}
-                                anchorOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'left',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'left',
-                                }}
-                                open={Boolean(anchorElNav)}
-                                onClose={handleCloseNavMenu}
-                                sx={{
-                                    display: {xs: 'block', md: 'none'},
-                                }}
-                            >
-                                {pages.map((page) => (
-                                    <MenuItem key={page} onClick={handleSelectNavMenu.bind(this, page)}>
-                                        <Typography textAlign="center">{page}</Typography>
-                                    </MenuItem>
-                                ))}
-                            </Menu>
-                        </Box>
-                        <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}/>
-                        <Box sx={{flexGrow: 0, display: {xs: 'none', md: 'flex'}}}>
+        <ThemeProvider theme={theme}>
+            <AppBar position="fixed" sx={{zIndex: (theme) => theme.zIndex.drawer + 1}}>
+                <Toolbar>
+                    <Typography variant="h6" component="div" sx={{mr: 2, display: {xs: 'none', md: 'flex'}}}>
+                        Kubernetes Pod Manager
+                    </Typography>
+                    <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
+                        <IconButton
+                            size="large"
+                            edge="start"
+                            color="inherit"
+                            aria-label="menu"
+                            onClick={handleOpenNavMenu}
+                            sx={{mr: 2}}
+                        >
+                            <MenuIcon/>
+                        </IconButton>
+                        <Menu
+                            id="menu-appbar"
+                            anchorEl={anchorElNav}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'left',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'left',
+                            }}
+                            open={Boolean(anchorElNav)}
+                            onClose={handleCloseNavMenu}
+                            sx={{
+                                display: {xs: 'block', md: 'none'},
+                            }}
+                        >
                             {pages.map((page) => (
-                                <Button
-                                    key={page}
-                                    onClick={handleSelectNavMenu.bind(this, page)}
-                                    sx={{my: 2, color: 'white', display: 'block'}}
-                                >
-                                    {page}
-                                </Button>
+                                <MenuItem key={page} onClick={handleSelectNavMenu.bind(this, page)}>
+                                    <Typography textAlign="center">{page}</Typography>
+                                </MenuItem>
                             ))}
-                        </Box>
-                    </Toolbar>
-                </AppBar>
-                <PermanentDrawerLeft/>
-            </ThemeProvider>
+                        </Menu>
+                    </Box>
+                    <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}/>
+                    <Box sx={{flexGrow: 0, display: {xs: 'none', md: 'flex'}}}>
+                        {pages.map((page) => (
+                            <Button
+                                key={page}
+                                onClick={handleSelectNavMenu.bind(this, page)}
+                                sx={{my: 2, color: 'white', display: 'block'}}
+                            >
+                                {page}
+                            </Button>
+                        ))}
+                    </Box>
+                </Toolbar>
+            </AppBar>
+            <PermanentDrawerLeft/>
+        </ThemeProvider>
 
 
     );
