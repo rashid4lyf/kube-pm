@@ -51,6 +51,18 @@ class KubernetesService {
         let response = await axios.get("/api/kubernetes/".concat(namespace).concat("/deployment/").concat(deploymentName).concat("/restart"))
         return response.data
     }
+
+    static getServiceAccountsForNs = async (namespace) => {
+        let response = await axios.get("/api/kubernetes/".concat(namespace).concat("/serviceaccounts"))
+        return response.data
+    }
+
+    static getSpecifiedServiceAccountDetails = async (sa, namespace) => {
+        let response = await axios.get("/api/kubernetes/".concat(namespace).concat("/serviceaccounts/").concat(sa.name))
+        return response.data
+    }
+
+
 }
 
 export default KubernetesService;

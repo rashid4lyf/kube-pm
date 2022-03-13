@@ -5,6 +5,8 @@ import com.rashiddy.kubernetespodscaler.data.DeploymentInfo;
 import com.rashiddy.kubernetespodscaler.services.KubernetesService;
 import com.rashiddy.kubernetespodscaler.services.KubernetesServiceImpl;
 import io.fabric8.kubernetes.api.model.NamespaceList;
+import io.fabric8.kubernetes.api.model.ServiceAccount;
+import io.fabric8.kubernetes.api.model.ServiceAccountList;
 import io.fabric8.kubernetes.api.model.apps.Deployment;
 import io.fabric8.kubernetes.api.model.apps.DeploymentList;
 import org.springframework.web.bind.annotation.*;
@@ -65,6 +67,18 @@ public class KubernetesController {
     @GetMapping(value = "/{namespace}/pods/nonrunning")
     public Mono<Integer> getTotalPodsNotRunningForNamespace(@PathVariable(name = "namespace") String namespace) {
         Integer total = kubernetesService.getTotalPodsNotRunningForNamespace(namespace);
+        return Mono.just(total);
+    }
+
+    @GetMapping(value = "/{namespace}/serviceaccounts")
+    public Mono<ServiceAccountList> getServiceAccounts(@PathVariable(name = "namespace") String namespace) {
+        ServiceAccountList total = kubernetesService.getServiceAccountsForNs(namespace);
+        return Mono.just(total);
+    }
+
+    @GetMapping(value = "/{namespace}/serviceaccounts/{sa}")
+    public Mono<ServiceAccount> getSpecifiedServiceAccount(@PathVariable(name = "namespace") String namespace, @PathVariable(name = "sa") String serviceAccount) {
+        ServiceAccount total = kubernetesService.getSpecificServiceAccountForNs(namespace, serviceAccount);
         return Mono.just(total);
     }
 

@@ -22,7 +22,7 @@ import KubernetesService from "../services/KubernetesService";
 
 function Deployment(props) {
 
-    let { namespace } = useParams();
+    let {namespace} = useParams();
     let [query, setQuery] = useState(false)
     const [open, setOpen] = useState(false)
     const [openDialog, setOpenDialog] = useState(false)
@@ -38,8 +38,6 @@ function Deployment(props) {
 
     const [options, setOptions] = React.useState([]);
     const loading = open && options.length === 0;
-
-
 
 
     useEffect(() => {
@@ -99,7 +97,8 @@ function Deployment(props) {
                 }
             });
             if (extra > 1) {
-                items.push(<Box key={allLabels} sx={{ marginTop:1}}><Tooltip title={allLabels}><Chip label={"+" + extra}/></Tooltip></Box>)
+                items.push(<Box key={allLabels} sx={{marginTop: 1}}><Tooltip title={allLabels}><Chip
+                    label={"+" + extra}/></Tooltip></Box>)
             }
 
             return items
@@ -114,36 +113,47 @@ function Deployment(props) {
     }
 
     const onCloseDialog = (selectedValue, deploymentName) => {
-      if (selectedValue === "confirm") {
-          KubernetesService.restartDeployment(namespace, deploymentName).then(r =>
-          console.log(r.data))
-      }
-      setOpenDialog(false)
+        if (selectedValue === "confirm") {
+            KubernetesService.restartDeployment(namespace, deploymentName).then()
+        }
+        setOpenDialog(false)
     }
 
     const columns = [
         {field: 'id', headerName: 'ID', flex: 0.125},
         {field: 'deploymentName', headerName: "Deployment Name", flex: 0.5},
-        {field: 'labels', headerName: "Labels", width: 400, renderCell: (cellValues) => {
+        {
+            field: 'labels', headerName: "Labels", width: 400, renderCell: (cellValues) => {
                 return (
 
                     <Box
-                        sx={{ display: 'flex', flexWrap: 'wrap', width: 400, p: 1, height: '100%', flexDirection: "row", overflow: "hidden" }}>
+                        sx={{
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            width: 400,
+                            p: 1,
+                            height: '100%',
+                            flexDirection: "row",
+                            overflow: "hidden"
+                        }}>
                         {renderChips(cellValues)}
                     </Box>
                 );
-            }},
+            }
+        },
         {field: 'status', headerName: "status", flex: 0.25},
         {field: 'age', headerName: "age", flex: 0.25},
-        {field: 'actions', headerName: "actions", flex: 0.25, renderCell: (cellValues => {
-            return (
-                <Tooltip title="Restart">
-                    <IconButton aria-label="restart deployment" onClick={() => handleClick(cellValues)}>
-                        <RestartAltOutlined></RestartAltOutlined>
-                    </IconButton>
-                </Tooltip>
-            )
-            })}
+        {
+            field: 'actions', headerName: "actions", flex: 0.25, renderCell: (cellValues => {
+                return (
+                    <Tooltip title="Restart">
+                        <IconButton aria-label="restart deployment" onClick={() => handleClick(cellValues)}>
+                            <RestartAltOutlined></RestartAltOutlined>
+                        </IconButton>
+                    </Tooltip>
+                )
+            })
+        }
     ]
 
     return (
@@ -154,45 +164,45 @@ function Deployment(props) {
                 </Grid>
                 <Grid item xs={4}>
                     <Box display="flex" justifyContent="flex-end">
-                    <Autocomplete
-                        disablePortal
-                        open={open}
-                        onOpen={() => {
-                            setOpen(true);
-                        }}
-                        onClose={() => {
-                            setOpen(false);
-                        }}
-                        onChange={(event, newValue) => {
-                            console.log(newValue)
-                            if (newValue === null) {
-                                setSelectedNamespace('')
-                            } else {
-                                setSelectedNamespace(newValue)
-                            }
-                        }}
-                        isOptionEqualToValue={(option, value) => option.name === value.name}
-                        getOptionLabel={(option) => option.name}
-                        id="combo-box-demo"
-                        options={options}
-                        loading={loading}
-                        sx={{ width: '75%' }}
-                        renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                label={namespace === undefined ? "Select Namespace" : namespace}
-                                InputProps={{
-                                    ...params.InputProps,
-                                    endAdornment: (
-                                        <React.Fragment>
-                                            {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                                            {params.InputProps.endAdornment}
-                                        </React.Fragment>
-                                    ),
-                                }}
-                            />
-                        )}
-                    />
+                        <Autocomplete
+                            disablePortal
+                            open={open}
+                            onOpen={() => {
+                                setOpen(true);
+                            }}
+                            onClose={() => {
+                                setOpen(false);
+                            }}
+                            onChange={(event, newValue) => {
+                                console.log(newValue)
+                                if (newValue === null) {
+                                    setSelectedNamespace('')
+                                } else {
+                                    setSelectedNamespace(newValue)
+                                }
+                            }}
+                            isOptionEqualToValue={(option, value) => option.name === value.name}
+                            getOptionLabel={(option) => option.name}
+                            id="combo-box-demo"
+                            options={options}
+                            loading={loading}
+                            sx={{width: '75%'}}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label={namespace === undefined ? "Select Namespace" : namespace}
+                                    InputProps={{
+                                        ...params.InputProps,
+                                        endAdornment: (
+                                            <React.Fragment>
+                                                {loading ? <CircularProgress color="inherit" size={20}/> : null}
+                                                {params.InputProps.endAdornment}
+                                            </React.Fragment>
+                                        ),
+                                    }}
+                                />
+                            )}
+                        />
                     </Box>
                 </Grid>
             </Grid>

@@ -1,9 +1,7 @@
 package com.rashiddy.kubernetespodscaler.services;
 
 import com.rashiddy.kubernetespodscaler.data.DeploymentInfo;
-import io.fabric8.kubernetes.api.model.BaseKubernetesListFluent;
-import io.fabric8.kubernetes.api.model.NamespaceList;
-import io.fabric8.kubernetes.api.model.PodList;
+import io.fabric8.kubernetes.api.model.*;
 import io.fabric8.kubernetes.api.model.apps.Deployment;
 import io.fabric8.kubernetes.api.model.apps.DeploymentList;
 
@@ -26,6 +24,10 @@ public interface KubernetesService {
     List<DeploymentInfo> getAllDeploymentsForNamespace(String namespace);
 
     String restartDeployment(String namespace, String deploymentName);
+
+    ServiceAccountList getServiceAccountsForNs(String namespace);
+
+    ServiceAccount getSpecificServiceAccountForNs(String namespace, String serviceAccount);
 
     void watchEvents();
 }

@@ -6,6 +6,8 @@ import com.rashiddy.kubernetespodscaler.data.Event;
 import com.rashiddy.kubernetespodscaler.data.Label;
 import io.fabric8.kubernetes.api.model.NamespaceList;
 import io.fabric8.kubernetes.api.model.PodList;
+import io.fabric8.kubernetes.api.model.ServiceAccount;
+import io.fabric8.kubernetes.api.model.ServiceAccountList;
 import io.fabric8.kubernetes.api.model.apps.Deployment;
 import io.fabric8.kubernetes.api.model.apps.DeploymentList;
 
@@ -85,6 +87,18 @@ public class KubernetesServiceImpl implements KubernetesService {
     public String restartDeployment(String namespace, String deploymentName) {
         kubernetesClient.apps().deployments().inNamespace(namespace).withName(deploymentName).rolling().restart();
         return "success";
+    }
+
+    @Override
+    public ServiceAccountList getServiceAccountsForNs(String namespace) {
+        ServiceAccountList serviceAccountList = kubernetesClient.serviceAccounts().inNamespace(namespace).list();
+        return serviceAccountList;
+    }
+
+    @Override
+    public ServiceAccount getSpecificServiceAccountForNs(String namespace, String serviceAccount) {
+        ServiceAccount serviceAccountResource = kubernetesClient.serviceAccounts().inNamespace(namespace).withName(serviceAccount).get();
+        return serviceAccountResource;
     }
 
     private String getBetween(Instant instantNow, Instant instantCreation) {
