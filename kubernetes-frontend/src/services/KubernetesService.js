@@ -9,7 +9,6 @@ class KubernetesService {
         let count = 1;
         let response = await axios.get("/api/kubernetes/namespaces")
         response.data.items.forEach(item => {
-            console.log(item)
             list.push({
                 id: count,
                 creationTime: item.metadata.creationTimestamp,

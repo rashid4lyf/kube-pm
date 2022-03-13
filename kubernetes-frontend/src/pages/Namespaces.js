@@ -112,71 +112,123 @@ function Namespaces() {
             // onClick={toggleDrawer(anchor, false)}
             // onKeyDown={toggleDrawer(anchor, false)}
         >
-            <Box sx={{overflow: 'auto'}}>
-                <Box sx={{marginTop: 12, marginLeft: 1, marginRight: 1, marginBottom: 1}}>
-                    {serviceAccountDetails.metadata !== undefined &&
+            {serviceAccountDetails.metadata !== undefined &&
+                <Box sx={{overflow: 'auto'}}>
+                    <Box sx={{marginTop: 12, marginLeft: 1, marginRight: 1, marginBottom: 1}}>
+
                         <Grid container spacing={2}>
                             <Grid item xs={11}>
-                                <Typography style={{ fontWeight: 600 }} variant="h7">Service
+                                <Typography style={{fontWeight: 600}} variant="h7">Service
                                     Account: {serviceAccountDetails.metadata.name}</Typography>
                             </Grid>
-                            <Grid item xs={1} >
+                            <Grid item xs={1}>
                                 <CopyToClipboard sx={{padding: 0}} text={serviceAccountDetails.metadata.name}>
-                                    <IconButton  aria-label="copy label">
-                                        <ContentCopyOutlined />
+                                    <IconButton aria-label="copy label">
+                                        <ContentCopyOutlined/>
                                     </IconButton>
                                 </CopyToClipboard>
                             </Grid>
                         </Grid>
-                    }
 
-                </Box>
-                <Divider/>
-                <Box sx={{overflow: 'auto'}}>
-                    <Box sx={{marginTop: 5, marginLeft: 1, marginRight: 1, marginBottom: 1}}>
-                        <Grid container spacing={1}>
-                            <Grid item xs={4}>
-                                <Box sx={{fontSize: 15 }}>
-                                Created
-                                </Box>
-                            </Grid>
-                            <Grid item xs={6} >
-                                <Box sx={{fontSize: 15 }}>
-                                    {serviceAccountDetails.metadata.creationTimestamp}
-                                </Box>
-                            </Grid>
-                        </Grid>
                     </Box>
+                    <Divider/>
+                    <Box sx={{overflow: 'auto'}}>
+                        <Box sx={{marginTop: 5, marginLeft: 1, marginRight: 1, marginBottom: 1}}>
+                            <Grid container spacing={1}>
+                                <Grid item xs={4}>
+                                    <Box sx={{fontSize: 15}}>
+                                        Created
+                                    </Box>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <Box sx={{fontSize: 15}}>
+                                        {serviceAccountDetails.metadata.creationTimestamp}
+                                    </Box>
+                                </Grid>
+                            </Grid>
+                        </Box>
+                    </Box>
+                    <Divider/>
+                    <Box sx={{overflow: 'auto'}}>
+                        <Box sx={{marginTop: 1, marginLeft: 1, marginRight: 1, marginBottom: 1}}>
+                            <Grid container spacing={1}>
+                                <Grid item xs={4}>
+                                    <Box sx={{fontSize: 15}}>
+                                        Name
+                                    </Box>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <Box sx={{fontSize: 15}}>
+                                        {serviceAccountDetails.metadata.name}
+                                    </Box>
+                                </Grid>
+                            </Grid>
+                        </Box>
+                    </Box>
+                    <Divider/>
+                    <Box sx={{overflow: 'auto'}}>
+                        <Box sx={{marginTop: 1, marginLeft: 1, marginRight: 1, marginBottom: 1}}>
+                            <Grid container spacing={1}>
+                                <Grid item xs={4}>
+                                    <Box sx={{fontSize: 15}}>
+                                        Namespace
+                                    </Box>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <Box sx={{fontSize: 15}}>
+                                        {serviceAccountDetails.metadata.namespace}
+                                    </Box>
+                                </Grid>
+                            </Grid>
+                        </Box>
+                    </Box>
+                    <Divider/>
+                    <Box sx={{overflow: 'auto'}}>
+                        <Box sx={{marginTop: 1, marginLeft: 1, marginRight: 1, marginBottom: 1}}>
+                            <Grid container spacing={1}>
+                                <Grid item xs={4}>
+                                    <Box sx={{fontSize: 15}}>
+                                        UID
+                                    </Box>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <Box sx={{fontSize: 15}}>
+                                        {serviceAccountDetails.metadata.uid}
+                                    </Box>
+                                </Grid>
+                            </Grid>
+                        </Box>
+                    </Box>
+                    {/*<ListItem button key={"Workloads"} sx={{marginTop: 10}}>*/}
+                    {/*    <ListItemIcon>*/}
+                    {/*        <BlurOn/>*/}
+                    {/*    </ListItemIcon>*/}
+                    {/*    <ListItemText primary={"Service Account Details"}/>*/}
+                    {/*</ListItem>*/}
+                    <Divider/>
+                    {/*<List>*/}
+                    {/*    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (*/}
+                    {/*        <ListItem button key={text}>*/}
+                    {/*            <ListItemIcon>*/}
+                    {/*                {index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}*/}
+                    {/*            </ListItemIcon>*/}
+                    {/*            <ListItemText primary={text}/>*/}
+                    {/*        </ListItem>*/}
+                    {/*    ))}*/}
+                    {/*</List>*/}
+                    {/*<Divider/>*/}
+                    {/*<List>*/}
+                    {/*    {['All mail', 'Trash', 'Spam'].map((text, index) => (*/}
+                    {/*        <ListItem button key={text}>*/}
+                    {/*            <ListItemIcon>*/}
+                    {/*                {index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}*/}
+                    {/*            </ListItemIcon>*/}
+                    {/*            <ListItemText primary={text}/>*/}
+                    {/*        </ListItem>*/}
+                    {/*    ))}*/}
+                    {/*</List>*/}
                 </Box>
-                {/*<ListItem button key={"Workloads"} sx={{marginTop: 10}}>*/}
-                {/*    <ListItemIcon>*/}
-                {/*        <BlurOn/>*/}
-                {/*    </ListItemIcon>*/}
-                {/*    <ListItemText primary={"Service Account Details"}/>*/}
-                {/*</ListItem>*/}
-                <Divider/>
-                {/*<List>*/}
-                {/*    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (*/}
-                {/*        <ListItem button key={text}>*/}
-                {/*            <ListItemIcon>*/}
-                {/*                {index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}*/}
-                {/*            </ListItemIcon>*/}
-                {/*            <ListItemText primary={text}/>*/}
-                {/*        </ListItem>*/}
-                {/*    ))}*/}
-                {/*</List>*/}
-                {/*<Divider/>*/}
-                {/*<List>*/}
-                {/*    {['All mail', 'Trash', 'Spam'].map((text, index) => (*/}
-                {/*        <ListItem button key={text}>*/}
-                {/*            <ListItemIcon>*/}
-                {/*                {index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}*/}
-                {/*            </ListItemIcon>*/}
-                {/*            <ListItemText primary={text}/>*/}
-                {/*        </ListItem>*/}
-                {/*    ))}*/}
-                {/*</List>*/}
-            </Box>
+            }
         </Box>
     );
 
