@@ -31,7 +31,7 @@ function PermanentDrawerLeft(props) {
         >
             <Toolbar/>
             <Box sx={{overflow: 'auto'}}>
-                <ListItem button key={"Workloads"} sx={{marginTop:1}}>
+                <ListItem button key={"Workloads"} sx={{marginTop: 1}}>
                     <ListItemIcon>
                         <BlurOn/>
                     </ListItemIcon>
@@ -42,7 +42,7 @@ function PermanentDrawerLeft(props) {
                     {['Namespaces', 'Deployments', 'Pods', 'Daemon Sets', 'Jobs'].map((text, index) => (
                         <ListItem button key={text} onClick={() => handleClick(text)}>
                             <ListItemIcon>
-                               <div/>
+                                <div/>
                             </ListItemIcon>
                             <ListItemText primary={text}/>
                         </ListItem>
@@ -60,7 +60,7 @@ function PermanentDrawerLeft(props) {
                     {['CRDs', 'Config Maps', 'Secrets'].map((text, index) => (
                         <ListItem button key={text}>
                             <ListItemIcon>
-                                 <div/>
+                                <div/>
                             </ListItemIcon>
                             <ListItemText primary={text}/>
                         </ListItem>

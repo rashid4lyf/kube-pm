@@ -18,6 +18,7 @@ import CustomDataGridServiceAccount from "../components/CustomDataGridServiceAcc
 import kubernetesService from "../services/KubernetesService";
 import {BlurOn, ContentCopyOutlined, RestartAltOutlined} from "@mui/icons-material";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import {palette} from '@mui/system';
 
 function Namespaces() {
 
@@ -199,34 +200,36 @@ function Namespaces() {
                             </Grid>
                         </Box>
                     </Box>
-                    {/*<ListItem button key={"Workloads"} sx={{marginTop: 10}}>*/}
-                    {/*    <ListItemIcon>*/}
-                    {/*        <BlurOn/>*/}
-                    {/*    </ListItemIcon>*/}
-                    {/*    <ListItemText primary={"Service Account Details"}/>*/}
-                    {/*</ListItem>*/}
                     <Divider/>
-                    {/*<List>*/}
-                    {/*    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (*/}
-                    {/*        <ListItem button key={text}>*/}
-                    {/*            <ListItemIcon>*/}
-                    {/*                {index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}*/}
-                    {/*            </ListItemIcon>*/}
-                    {/*            <ListItemText primary={text}/>*/}
-                    {/*        </ListItem>*/}
-                    {/*    ))}*/}
-                    {/*</List>*/}
-                    {/*<Divider/>*/}
-                    {/*<List>*/}
-                    {/*    {['All mail', 'Trash', 'Spam'].map((text, index) => (*/}
-                    {/*        <ListItem button key={text}>*/}
-                    {/*            <ListItemIcon>*/}
-                    {/*                {index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}*/}
-                    {/*            </ListItemIcon>*/}
-                    {/*            <ListItemText primary={text}/>*/}
-                    {/*        </ListItem>*/}
-                    {/*    ))}*/}
-                    {/*</List>*/}
+                    <Box
+                        sx={{
+                            bgcolor: 'text.secondary',
+                            color: 'background.paper',
+                            p: 2,
+                        }}
+                    >
+                        Mountable Secrets
+                    </Box>
+                    {
+                        serviceAccountDetails.secrets.map((value) => (
+                            <Box sx={{overflow: 'auto'}} key={value}>
+                                <Box sx={{marginTop: 1, marginLeft: 1, marginRight: 1, marginBottom: 1}}>
+                                    <Grid container spacing={1}>
+                                        <Grid item xs={4}>
+                                            <Box sx={{fontSize: 15}}>
+                                                Secret:
+                                            </Box>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Box sx={{fontSize: 15}}>
+                                                {value.name}
+                                            </Box>
+                                        </Grid>
+                                    </Grid>
+                                </Box>
+                            </Box>))
+                    }
+
                 </Box>
             }
         </Box>
@@ -236,7 +239,7 @@ function Namespaces() {
         let sa = serviceAccountsList[item - 1]
         if (sa !== undefined) {
             kubernetesService.getSpecifiedServiceAccountDetails(sa, selectedNamespace).then(res => {
-                console.log(res)
+                    console.log(res)
                     setServiceAccountDetails(res)
                     setDrawerState({...drawerState, ["right"]: true});
                 }

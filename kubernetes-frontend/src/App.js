@@ -6,11 +6,11 @@ import React from "react";
 
 function App() {
     return (
-        <Box sx={{ display: 'flex' }}>
-            <CssBaseline />
+        <Box sx={{display: 'flex'}}>
+            <CssBaseline/>
             <Header/>
-            <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-                <Toolbar />
+            <Box component="main" sx={{flexGrow: 1, p: 3}}>
+                <Toolbar/>
                 <Outlet/>
             </Box>
         </Box>

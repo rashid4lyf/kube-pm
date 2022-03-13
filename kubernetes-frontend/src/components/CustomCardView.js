@@ -26,7 +26,7 @@ function CustomCardView(props) {
     }
 
     return (
-        <Card sx={{ minHeight: 250, textAlign: 'left'}}>
+        <Card sx={{minHeight: 250, textAlign: 'left'}}>
             <CardHeader
                 avatar={
                     <Avatar sx={{bgcolor: teal[500]}} aria-label="deployments">
@@ -38,9 +38,9 @@ function CustomCardView(props) {
             />
 
             <CardContent sx={{textAlign: 'center'}}>
-                { props.loading &&
-                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                        <CircularProgress />
+                {props.loading &&
+                    <Box sx={{display: 'flex', justifyContent: 'center'}}>
+                        <CircularProgress/>
                     </Box>
                 }
                 {!props.loading &&
